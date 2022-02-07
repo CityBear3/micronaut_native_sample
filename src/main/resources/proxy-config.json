@@ -1,0 +1,5 @@
+[
+  {"interfaces": ["java.sql.Connection"]},
+  {"interfaces": ["java.sql.Statement"]},
+  {"interfaces": ["java.sql.ResultSet"]}
+]

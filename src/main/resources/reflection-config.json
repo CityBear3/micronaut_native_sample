@@ -1,0 +1,6 @@
+[
+  {
+    "name": "com.mysql.cj.jdbc.Driver",
+    "allDeclaredConstructors": true
+  }
+]

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: demoapp:latest
+    ports:
+      - "8080:8080"
+    environment:
+      JWT_GENERATOR_SIGNATURE_SECRET: ${JWT_GENERATOR_SIGNATURE_SECRET}
+    command:
+      - sleep 3
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sample
+    ports:
+      - "5432:5432"

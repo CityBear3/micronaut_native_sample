@@ -1,0 +1,28 @@
+micronaut:
+  application:
+    name: demoapp
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET}"'
+  server:
+    netty:
+      access-logger:
+        enabled: true
+
+datasources:
+  default:
+    url: jdbc:postgresql://db:5432/sample
+    username: root
+    password: password
+    maximum-pool-size: 10
+    driver-class-name: org.postgresql.Driver
+
+flyway:
+  datasources:
+    default:
+      enabled: true

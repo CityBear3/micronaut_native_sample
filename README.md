@@ -1,3 +1,23 @@
+# Sample of backend application with micronaut
+
+## Build
+
+```shell
+./gradlew dockerBuildNative
+```
+note: <br>
+If you get a error with code 137, retry build your app.
+<br>
+This code meant for you that you didn't have enough memory available.
+
+
+## Run
+```shell
+docker compose up -d
+```
+
+---
+
 ## Micronaut 3.2.7 Documentation
 
 - [User Guide](https://docs.micronaut.io/3.2.7/guide/index.html)

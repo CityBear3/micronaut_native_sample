@@ -9,6 +9,12 @@ micronaut:
           secret:
             generator:
               secret: '"${JWT_GENERATOR_SIGNATURE_SECRET}"'
+        generator:
+          refresh-token:
+            enabled: true
+            secret: '"${JWT_GENERATOR_SIGNATURE_SECRET_REFRESH}"'
+          access-token:
+            expiration: ${TOKEN_EXPIRATION}
   server:
     netty:
       access-logger:
@@ -16,9 +22,9 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:postgresql://db:5432/sample
-    username: root
-    password: password
+    url: ${DB_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     maximum-pool-size: 10
     driver-class-name: org.postgresql.Driver
 

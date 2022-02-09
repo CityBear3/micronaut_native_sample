@@ -1,0 +1,34 @@
+micronaut:
+  application:
+    name: demoapp
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: TEST_SECRET
+        generator:
+          refresh-token:
+            enabled: true
+            secret: TEST_SECRET_REFRESH
+          access-token:
+            expiration: 180
+  server:
+    netty:
+      access-logger:
+        enabled: true
+
+datasources:
+  default:
+    url: ${TEST_DB_URL}
+    username: ${TEST_POSTGRES_USER:test}
+    password: ${TEST_POSTGRES_PASSWORD:test}
+    maximum-pool-size: 10
+    driver-class-name: org.postgresql.Driver
+
+flyway:
+  datasources:
+    default:
+      enabled: true

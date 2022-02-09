@@ -24,7 +24,19 @@ data class User(
     val password: String,
 
     @NotNull
-    val role: String
+    val role: String,
+
+    val refreshToken: String?,
+
+    val revoked: Boolean
 ) {
-    constructor(name: String, email: String, password: String, role: String) : this(null, name, email, password, role)
+    constructor(name: String, email: String, password: String, role: String) : this(
+        null,
+        name,
+        email,
+        password,
+        role,
+        null,
+        false
+    )
 }

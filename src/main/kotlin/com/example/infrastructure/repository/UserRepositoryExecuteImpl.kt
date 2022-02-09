@@ -2,6 +2,7 @@ package com.example.infrastructure.repository
 
 import com.example.domain.user.*
 import jakarta.inject.Singleton
+import java.util.*
 
 @Singleton
 class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : UserRepositoryExecute {
@@ -20,7 +21,9 @@ class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : Us
             UserName(userEntity.name),
             UserEmail(userEntity.email),
             UserPassword(userEntity.password),
-            UserRole.valueOf(userEntity.role)
+            UserRole.valueOf(userEntity.role),
+            userEntity.refreshToken,
+            userEntity.revoked
         )
     }
 
@@ -32,11 +35,33 @@ class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : Us
             UserName(userEntity.name),
             UserEmail(userEntity.email),
             UserPassword(userEntity.password),
-            UserRole.valueOf(userEntity.role)
+            UserRole.valueOf(userEntity.role),
+            userRefreshToken = userEntity.refreshToken,
+            userRevoked = userEntity.revoked
         )
+    }
+
+    override fun findByToken(refreshToken: String): User? {
+        val userEntity = userRepository.findByRefreshToken(refreshToken)
+        if (userEntity != null) {
+            return User(
+                userId = userEntity.id,
+                UserName(userEntity.name),
+                UserEmail(userEntity.email),
+                UserPassword(userEntity.password),
+                UserRole.valueOf(userEntity.role),
+                userRefreshToken = userEntity.refreshToken,
+                userRevoked = userEntity.revoked
+            )
+        }
+        return null
     }
 
     override fun existsByEmail(userEmail: UserEmail): Boolean {
         return userRepository.existsByEmail(userEmail.getValue())
+    }
+
+    override fun updateById(id: UUID, refreshToken: String, revoked: Boolean) {
+        userRepository.updateById(id, refreshToken, revoked)
     }
 }

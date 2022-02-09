@@ -7,13 +7,17 @@ data class User(
     val userName: UserName,
     val userEmail: UserEmail,
     var userPassword: UserPassword,
-    val userRole: UserRole
+    val userRole: UserRole,
+    val userRefreshToken: String?,
+    val userRevoked: Boolean
 ) {
     constructor(userName: UserName, userEmail: UserEmail, userPassword: UserPassword, userRole: UserRole) : this(
         null,
         userName,
         userEmail,
         userPassword,
-        userRole
+        userRole,
+        null,
+        false
     )
 }

@@ -16,5 +16,11 @@ interface UserRepository : CrudRepository<User, UUID> {
     fun findByEmail(email: String): User
 
     @Executable
+    fun findByRefreshToken(refreshToken: String): User?
+
+    @Executable
     fun existsByEmail(email: String): Boolean
+
+    @Executable
+    fun updateById(id: UUID, refreshToken: String, revoked: Boolean)
 }

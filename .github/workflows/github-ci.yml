@@ -33,3 +33,27 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew dockerBuildNative
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - name: run test
+        env:
+          TEST_DB_URL: jdbc:postgres://localhost:5432/test
+        run: |
+          chmod +x ./gradlew
+          ./gradlew test

@@ -26,4 +26,10 @@ class UserPasswordTest {
         userPassword = UserPassword("01234567891011121314151617")
         Assertions.assertFalse(userPassword.checkPassword())
     }
+
+    @Test
+    fun testPasswordValidationFailedByInvalidWord() {
+        userPassword = UserPassword("_*&ga$@#!~1234")
+        Assertions.assertFalse(userPassword.checkPassword())
+    }
 }

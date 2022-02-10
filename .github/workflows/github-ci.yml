@@ -58,7 +58,7 @@ jobs:
           java-version: '17'
       - name: run test
         env:
-          TEST_DB_URL: jdbc:postgres://localhost:5432/test
+          TEST_DB_URL: jdbc:postgresql://localhost:5432/test
         run: |
           chmod +x ./gradlew
           ./gradlew test

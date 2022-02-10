@@ -1,5 +1,8 @@
 # Sample of backend application with micronaut
 
+---
+[![CI](https://github.com/CityBear3/micronaut_native_sample/actions/workflows/github-ci.yml/badge.svg)](https://github.com/CityBear3/micronaut_native_sample/actions/workflows/github-ci.yml)
+
 ## Build
 
 ```shell

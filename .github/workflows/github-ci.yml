@@ -30,4 +30,6 @@ jobs:
           java-version: '17'
 
       - name: native build with docker image
-        run: ./gradlew dockerBuildNative
+        run: |
+          chmod +x ./gradlew
+          ./gradlew dockerBuildNative

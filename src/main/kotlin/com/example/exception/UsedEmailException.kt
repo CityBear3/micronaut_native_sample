@@ -1,3 +1,3 @@
 package com.example.exception
 
-class UsedEmailException: BaseException(code = 1409, message = "this email has already been used")
+class UsedEmailException : BaseException(ErrorCode.VALIDATION_ERROR, "this email has already been used")

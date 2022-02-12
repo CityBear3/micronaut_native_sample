@@ -5,6 +5,7 @@ import com.example.exception.EmailRuleViolationException
 import io.micronaut.context.annotation.Requires
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import jakarta.inject.Singleton
@@ -13,11 +14,21 @@ import jakarta.inject.Singleton
 @Produces
 @Singleton
 @Requires(classes = [EmailRuleViolationException::class, ExceptionHandler::class])
-class EmailRuleViolationExceptionHandler : ExceptionHandler<EmailRuleViolationException, HttpResponse<ErrorResponse>> {
+class EmailRuleViolationExceptionHandler(private val errorResponseFactory: ErrorResponseFactory) :
+    ExceptionHandler<EmailRuleViolationException, HttpResponse<ErrorResponse>> {
     override fun handle(
         request: HttpRequest<*>?,
-        exception: EmailRuleViolationException
+        exception: EmailRuleViolationException?
     ): HttpResponse<ErrorResponse> {
-        return HttpResponse.badRequest(ErrorResponse(exception.code, exception.message))
+        if (exception != null) {
+            return HttpResponse.badRequest(
+                errorResponseFactory.build(
+                    HttpStatus.BAD_REQUEST,
+                    exception.code,
+                    exception.message
+                )
+            )
+        }
+        return HttpResponse.serverError(errorResponseFactory.buildUnknownError())
     }
 }

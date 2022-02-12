@@ -13,9 +13,18 @@ import jakarta.inject.Singleton
 @Produces
 @Singleton
 @Requires(classes = [UsedEmailException::class, ExceptionHandler::class])
-class UsedEmailExceptionHandler : ExceptionHandler<UsedEmailException, HttpResponse<ErrorResponse>> {
-    override fun handle(request: HttpRequest<*>?, exception: UsedEmailException): HttpResponse<ErrorResponse> {
-        return HttpResponse.status<ErrorResponse?>(HttpStatus.CONFLICT)
-            .body(ErrorResponse(exception.code, exception.message))
+class UsedEmailExceptionHandler(private val errorResponseFactory: ErrorResponseFactory) :
+    ExceptionHandler<UsedEmailException, HttpResponse<ErrorResponse>> {
+    override fun handle(request: HttpRequest<*>?, exception: UsedEmailException?): HttpResponse<ErrorResponse> {
+        if (exception != null) {
+            return HttpResponse.badRequest(
+                errorResponseFactory.build(
+                    HttpStatus.BAD_REQUEST,
+                    exception.code,
+                    exception.message
+                )
+            )
+        }
+        return HttpResponse.serverError(errorResponseFactory.buildUnknownError())
     }
 }

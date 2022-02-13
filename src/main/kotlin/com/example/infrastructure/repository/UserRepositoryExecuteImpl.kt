@@ -2,13 +2,14 @@ package com.example.infrastructure.repository
 
 import com.example.domain.user.*
 import jakarta.inject.Singleton
+import java.time.Instant
 import java.util.*
 
 @Singleton
 class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : UserRepositoryExecute {
     override fun insert(user: User): User {
         val userEntity = userRepository.save(
-            com.example.infrastructure.entity.User(
+            com.example.infrastructure.entity.UserEntity(
                 name = user.userName.getValue(),
                 email = user.userEmail.getValue(),
                 password = user.userPassword.getValue(),
@@ -23,7 +24,10 @@ class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : Us
             UserPassword(userEntity.password),
             UserRole.valueOf(userEntity.role),
             userEntity.refreshToken,
-            userEntity.revoked
+            userEntity.revoked,
+            userEntity.createAt,
+            userEntity.updateAt,
+            userEntity.expireOn
         )
     }
 
@@ -37,7 +41,10 @@ class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : Us
             UserPassword(userEntity.password),
             UserRole.valueOf(userEntity.role),
             userRefreshToken = userEntity.refreshToken,
-            userRevoked = userEntity.revoked
+            userRevoked = userEntity.revoked,
+            createAt = userEntity.createAt,
+            updateAt = userEntity.updateAt,
+            expireOn = userEntity.expireOn
         )
     }
 
@@ -51,7 +58,10 @@ class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : Us
                 UserPassword(userEntity.password),
                 UserRole.valueOf(userEntity.role),
                 userRefreshToken = userEntity.refreshToken,
-                userRevoked = userEntity.revoked
+                userRevoked = userEntity.revoked,
+                createAt = userEntity.createAt,
+                updateAt = userEntity.updateAt,
+                expireOn = userEntity.expireOn
             )
         }
         return null
@@ -61,7 +71,7 @@ class UserRepositoryExecuteImpl(private val userRepository: UserRepository) : Us
         return userRepository.existsByEmail(userEmail.getValue())
     }
 
-    override fun updateById(id: UUID, refreshToken: String, revoked: Boolean) {
-        userRepository.updateById(id, refreshToken, revoked)
+    override fun updateById(id: UUID, refreshToken: String, revoked: Boolean, expireOn: Instant) {
+        userRepository.updateById(id, refreshToken, revoked, expireOn)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.domain.user
 
+import java.time.Instant
 import java.util.*
 
 data class User(
@@ -9,7 +10,10 @@ data class User(
     var userPassword: UserPassword,
     val userRole: UserRole,
     val userRefreshToken: String?,
-    val userRevoked: Boolean
+    val userRevoked: Boolean,
+    val createAt: Instant?,
+    val updateAt: Instant?,
+    val expireOn: Instant?
 ) {
     constructor(userName: UserName, userEmail: UserEmail, userPassword: UserPassword, userRole: UserRole) : this(
         null,
@@ -18,6 +22,9 @@ data class User(
         userPassword,
         userRole,
         null,
-        false
+        false,
+        null,
+        null,
+        null
     )
 }

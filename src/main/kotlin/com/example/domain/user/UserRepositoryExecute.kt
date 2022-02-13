@@ -12,5 +12,5 @@ interface UserRepositoryExecute {
 
     fun findByToken(refreshToken: String): User?
 
-    fun updateById(id: UUID, refreshToken: String, revoked: Boolean, expiredOn: Instant)
+    fun updateById(id: UUID, refreshToken: String, revoked: Boolean, expireOn: Instant)
 }
